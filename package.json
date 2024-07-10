@@ -1,0 +1,25 @@
+{
+  "name": "carpark-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "prisma-generate": "prisma generate",
+    "prisma-migrate": "prisma migrate dev --name init",
+    "ingest:carparks": "node src/scripts/carParkIngestionScript.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.0.0",
+    "body-parser": "^1.20.2",
+    "csv-parse": "^4.15.4",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^10.0.0",
+    "eslint": "^9.6.0",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^3.0.0",
+    "sqlite3": "^5.1.7",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

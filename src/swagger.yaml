@@ -1,0 +1,170 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Car Park Service API
+  description: Car Park Service API Documentation
+servers:
+  - url: http://localhost:3000/api/v1
+paths:
+  /carparks:
+    get:
+      summary: Get Car Parks 
+      parameters:
+        - name: isFreeParking
+          in: query
+          description: Free parking availability
+          required: false
+          schema:
+            type: booleab
+        - name: isNightParkingAllowed
+          in: query
+          description: Night parking availability
+          required: false
+          schema:
+            type: boolean
+        - name: gantryHeight
+          in: query
+          description: Maximum gantry height
+          required: false
+          schema:
+            type: number
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+          default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+          default: 10
+      responses:
+        '200':
+          description: A list of car parks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Carpark'
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      page:
+                        type: integer
+                      limit:
+                        type: integer
+                      totalPages:
+                        type: integer
+    
+  /carparks/{id}/favorite:
+    post:
+      summary: Add a car park to favorites
+      parameters:
+        - name: id
+          in: path
+          description: Car park ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Car park added to favorites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/FavoriteCarpark'
+  /favorites/{id}:
+    delete:
+      summary: Remove a car park from favorites
+      parameters:
+        - name: id
+          in: path
+          description: Favorite ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Car park removed from favorites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/FavoriteCarpark'
+components:
+  schemas:
+    Carpark:
+      type: object
+      properties:
+        id:
+          type: integer
+        carParkNo:
+          type: string
+        address:
+          type: string
+        xCoordinate:
+          type: number
+        yCoordinate:
+          type: number
+        carParkType:
+          type: string
+        parkingSystemType:
+          type: string
+        shortTermParking:
+          type: string
+        freeParking:
+          type: string
+        isNightParkingAllowed:
+          type: boolean
+        carParkDeckQuantity:
+          type: integer
+        gantryHeight:
+          type: number
+        isBasementCarpark:
+          type: boolean
+    FavoriteCarpark:
+      type: object
+      properties:
+        id:
+          type: integer
+        carParkId:
+          type: integer
+        userId:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+          nullable: true

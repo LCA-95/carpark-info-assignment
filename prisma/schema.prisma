@@ -1,0 +1,44 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Carpark {
+  id                    Int               @id @default(autoincrement())
+  carParkNo             String            @unique
+  address               String
+  xCoordinate           Float
+  yCoordinate           Float
+  carParkType           String
+  parkingSystemType     String
+  shortTermParking      String?
+  freeParking           String?
+  isNightParkingAllowed Boolean
+  carParkDeckQuantity   Int
+  gantryHeight          Float
+  isBasementCarpark     Boolean
+  FavoriteCarpark       FavoriteCarpark[]
+}
+
+model User {
+  id              Int               @id @default(autoincrement())
+  name            String
+  email           String            @unique
+  password        String
+  FavoriteCarpark FavoriteCarpark[]
+}
+
+model FavoriteCarpark {
+  id        Int       @id @default(autoincrement())
+  carParkId Int
+  userId    Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  user      User      @relation(fields: [userId], references: [id])
+  carPark   Carpark   @relation(fields: [carParkId], references: [id])
+}
