@@ -38,7 +38,7 @@ async function processFile(filePath) {
           shortTermParking:
             row.short_term_parking === "NO" ? null : row.short_term_parking,
           freeParking: row.free_parking === "NO" ? null : row.free_parking,
-          carParkDecks: parseInt(row.car_park_decks),
+          carParkDeckQuantity: parseInt(row.car_park_decks),
           gantryHeight: parseFloat(row.gantry_height),
         };
 
@@ -47,8 +47,6 @@ async function processFile(filePath) {
       .on("end", async () => {
         console.log("CSV file successfully processed");
         try {
-            console.log(primaClient)
-            console.log(carParks[0])
           // Use Prisma to upsert the car parks
           await primaClient.$transaction(
             carParks.map((carPark) =>

@@ -27,7 +27,6 @@ const prismaClient = new PrismaClient({
     },
   },
 });
-
 module.exports = () => {
   logger.log("Container Initialization Start...");
   if (container) {

@@ -24,7 +24,7 @@ class Carpark {
     this.shortTermParking = shortTermParking;
     this.freeParking = freeParking;
     this.isNightParkingAllowed = isNightParkingAllowed;
-    this.carParkDecks = carParkDecks;
+    this.carParkDeckQuantity = carParkDeckQuantity;
     this.gantryHeight = gantryHeight;
     this.isBasementCarpark = isBasementCarpark;
   }
