@@ -7,7 +7,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Carpark {
+model carPark {
   id                    Int               @id @default(autoincrement())
   carParkNo             String            @unique
   address               String
@@ -21,24 +21,26 @@ model Carpark {
   carParkDeckQuantity   Int
   gantryHeight          Float
   isBasementCarpark     Boolean
-  FavoriteCarpark       FavoriteCarpark[]
+  favoriteCarParks      favoriteCarPark[]  // Added relation field
 }
 
-model User {
+model user {
   id              Int               @id @default(autoincrement())
   name            String
   email           String            @unique
   password        String
-  FavoriteCarpark FavoriteCarpark[]
+  favoriteCarParks favoriteCarPark[]  // Added relation field
 }
 
-model FavoriteCarpark {
+model favoriteCarPark {
   id        Int       @id @default(autoincrement())
   carParkId Int
   userId    Int
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
-  user      User      @relation(fields: [userId], references: [id])
-  carPark   Carpark   @relation(fields: [carParkId], references: [id])
+  user      user      @relation(fields: [userId], references: [id])
+  carPark   carPark   @relation(fields: [carParkId], references: [id])
+
+  @@unique([carParkId, userId])
 }
