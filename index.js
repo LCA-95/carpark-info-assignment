@@ -2,20 +2,22 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const swaggerUi = require("swagger-ui-express");
+const yaml = require("yamljs");
 const path = require("path");
-const carparkRoutes = require("../api/routes/carparkRoutes");
-const favoriteCarparkRoutes = require("../api/routes/favoriteCarparkRoutes");
-const { config } = require("dotenv");
+const carparkRoutes = require("./src/routes/carparkRoutes");
+const favouriteCarparkRoutes = require("./src/routes/favouriteCarparkRoutes");
+const config = require("./src/config/config");
 
 const app = express();
-const swaggerDocument = require(path.join(__dirname, "..", "swagger.yaml"));
 
 app.use(bodyParser.json());
+
+const swaggerDocument = yaml.load(path.join(__dirname, "/src/swagger.yaml"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // API Routes
-app.use(config.apiPath, carparkRoutes);
-app.use(config.apiPath, favoriteCarparkRoutes);
+app.use(config.API_PATH, carparkRoutes);
+app.use(config.API_PATH, favouriteCarparkRoutes);
 
 // Health Endpoint
 app.get("/health", (req, res) => {
@@ -25,7 +27,7 @@ app.get("/health", (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  //Client Initialization
+  // Client Initialization
   const container = require("./src/container")();
   console.log(`Server running on port ${PORT}`);
 });

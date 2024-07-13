@@ -1,4 +1,4 @@
-class FavoriteCarpark {
+class FavouriteCarpark {
   constructor({ id, userId, carparkId, deletedAt, createdAt, updatedAt }) {
     this.id = id;
     this.userId = userId;
@@ -9,4 +9,4 @@ class FavoriteCarpark {
   }
 }
 
-module.exports = FavoriteCarpark;
+module.exports = FavouriteCarpark;

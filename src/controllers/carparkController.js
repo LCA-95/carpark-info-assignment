@@ -1,5 +1,5 @@
 const carparkRepository = require("../repository/carparkRepository");
-const config = require("../config");
+const config = require("../config/config");
 const getCarParks = async (req, res) => {
   const {
     isFreeParking,
@@ -45,6 +45,6 @@ const getCarParks = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   getCarParks,
 };

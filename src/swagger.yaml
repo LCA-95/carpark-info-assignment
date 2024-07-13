@@ -15,7 +15,7 @@ paths:
           description: Free parking availability
           required: false
           schema:
-            type: booleab
+            type: boolean
         - name: isNightParkingAllowed
           in: query
           description: Night parking availability
@@ -34,14 +34,12 @@ paths:
           required: false
           schema:
             type: integer
-          default: 1
         - name: limit
           in: query
           description: Number of items per page
           required: false
           schema:
             type: integer
-          default: 10
       responses:
         '200':
           description: A list of car parks
@@ -70,9 +68,9 @@ paths:
                       totalPages:
                         type: integer
     
-  /carparks/{id}/favorite:
+  /carparks/{id}/favourite:
     post:
-      summary: Add a car park to favorites
+      summary: Add a car park to favourites
       parameters:
         - name: id
           in: path
@@ -82,7 +80,7 @@ paths:
             type: integer
       responses:
         '201':
-          description: Car park added to favorites
+          description: Car park added to favourites
           content:
             application/json:
               schema:
@@ -93,20 +91,20 @@ paths:
                   message:
                     type: string
                   data:
-                    $ref: '#/components/schemas/FavoriteCarpark'
-  /favorites/{id}:
+                    $ref: '#/components/schemas/FavouriteCarpark'
+  /favourites/{id}:
     delete:
-      summary: Remove a car park from favorites
+      summary: Remove a car park from favourites
       parameters:
         - name: id
           in: path
-          description: Favorite ID
+          description: Favourite ID
           required: true
           schema:
             type: integer
       responses:
         '200':
-          description: Car park removed from favorites
+          description: Car park removed from favourites
           content:
             application/json:
               schema:
@@ -117,7 +115,7 @@ paths:
                   message:
                     type: string
                   data:
-                    $ref: '#/components/schemas/FavoriteCarpark'
+                    $ref: '#/components/schemas/FavouriteCarpark'
 components:
   schemas:
     Carpark:
@@ -149,7 +147,7 @@ components:
           type: number
         isBasementCarpark:
           type: boolean
-    FavoriteCarpark:
+    FavouriteCarpark:
       type: object
       properties:
         id:
