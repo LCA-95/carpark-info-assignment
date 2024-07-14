@@ -7,10 +7,11 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).send({ error: 'Authentication token required' });
   }
   try {
-    const decoded = jwt.verify(token, config.jwtSecret);
+    const decoded = jwt.verify(token, config.JWT.SECRET);
     req.user = decoded;
     next();
   } catch (error) {
+    console.error("Token Error: ", error)
     res.status(401).send({ error: 'Invalid token' });
   }
 };

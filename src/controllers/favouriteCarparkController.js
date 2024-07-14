@@ -1,21 +1,43 @@
 const favouriteCarparkRepository = require("../repository/favouriteCarparkRepository");
 
-const addFavouriteCarpark = async (req) => {
+const getFavouriteCarpark = async (req, res) => {
+  try {
+    const userId = req.query.userId || req.user.id;
+    const favouriteCarparks =
+      await favouriteCarparkRepository.findFavouriteByUserId(
+        parseInt(userId)
+      ); 
+    res.json({
+      status: "success",
+      message: "Favourite Carparks retrieved successfully",
+      data: favouriteCarparks,
+    });
+  } catch (error) {
+    console.error("Error: ", error);
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while retrieving car park favourite",
+      error: error.message,
+    });
+  }
+};
+
+const addFavouriteCarpark = async (req,res) => {
   const { carparkId } = req.params;
   const userId = req.user.id;
   const existingFavourite =
     await favouriteCarparkRepository.findFavouriteByCarParkIdAndUserId(
-        carparkId,
+      carparkId,
       userId
     );
-
   // Exist and not soft deleted
   if (existingFavourite) {
     throw new Error("Car park is already in your favourites!");
   } else {
-    const favourite = await favouriteCarparkRepository.upsertFavouriteCarpark({
-      where: { carParkId, userId },
-    });
+    const favourite = await favouriteCarparkRepository.upsertFavouriteCarpark(
+      carparkId,
+      userId,
+    );
     res.status(200).json({
       status: "success",
       message: "Car park added to favourites successfully",
@@ -24,12 +46,12 @@ const addFavouriteCarpark = async (req) => {
   }
 };
 
-const deleteFavouriteCarpark = async (req) => {
-  const { id } = req.params;
+const deleteFavouriteCarpark = async (req,res) => { 
+  const { favouriteCarparkId } = req.params;
 
   try {
     const favourite = await favouriteCarparkRepository.deleteFavouriteCarpark(
-      Number(id)
+      parseInt(favouriteCarparkId)
     );
     res.status(200).json({
       status: "success",
@@ -48,4 +70,5 @@ const deleteFavouriteCarpark = async (req) => {
 module.exports = {
   addFavouriteCarpark,
   deleteFavouriteCarpark,
+  getFavouriteCarpark,
 };

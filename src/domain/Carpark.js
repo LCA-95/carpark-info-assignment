@@ -10,7 +10,7 @@ class Carpark {
     shortTermParking,
     freeParking,
     isNightParkingAllowed,
-    carParkDecks,
+    carParkDeckQuantity,
     gantryHeight,
     isBasementCarpark,
   }) {

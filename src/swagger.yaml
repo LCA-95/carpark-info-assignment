@@ -5,6 +5,8 @@ info:
   description: Car Park Service API Documentation
 servers:
   - url: http://localhost:3000/api/v1
+security:
+  - bearerAuth: []
 paths:
   /carparks:
     get:
@@ -68,11 +70,11 @@ paths:
                       totalPages:
                         type: integer
     
-  /carparks/{id}/favourite:
+  /carparks/{carparkId}/favourites:
     post:
       summary: Add a car park to favourites
       parameters:
-        - name: id
+        - name: carparkId
           in: path
           description: Car park ID
           required: true
@@ -92,11 +94,11 @@ paths:
                     type: string
                   data:
                     $ref: '#/components/schemas/FavouriteCarpark'
-  /favourites/{id}:
+  /carparks/favourites/{favouriteCarparkId}:
     delete:
       summary: Remove a car park from favourites
       parameters:
-        - name: id
+        - name: favouriteCarparkId
           in: path
           description: Favourite ID
           required: true
@@ -117,6 +119,11 @@ paths:
                   data:
                     $ref: '#/components/schemas/FavouriteCarpark'
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Carpark:
       type: object
