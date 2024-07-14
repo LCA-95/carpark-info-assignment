@@ -1,6 +1,5 @@
 require("dotenv").config();
 
-
 module.exports = {
   API_PATH: process.env.API__PATH || `/api/v1`,
   PORT: process.env.PORT || 3000,

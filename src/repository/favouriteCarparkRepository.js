@@ -47,6 +47,9 @@ const findFavouriteByUserId = async (userId) => {
   const favourites =
     await container.services.prismaClient.favouriteCarPark.findMany({
       where: { userId: parseInt(userId), deletedAt: null },
+      include: {
+        carPark: true, // Include related car park details (Prisma Method)
+      },
     });
   return favourites.map((favourite) => new FavouriteCarpark(favourite));
 };

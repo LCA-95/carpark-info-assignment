@@ -24,7 +24,7 @@ const getCarParks = async (req, res) => {
   }
 
   if (gantryHeight) {
-    filterCriteria.gantryHeight = { lte: parseFloat(gantryHeight) };
+    filterCriteria.gantryHeight = { gte: parseFloat(gantryHeight) };
   }
 
   try {

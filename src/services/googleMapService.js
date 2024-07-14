@@ -1,6 +1,6 @@
 // Sample Google Map API Service ()
+/*
 const axios = require("axios");
-
 module.exports = ({ CONFIG, logger }) => {
   const apiKey = CONFIG.GOOGLE.MAP_API_KEY;
   const googleMapHttpClient = axios.create({
@@ -37,3 +37,4 @@ module.exports = ({ CONFIG, logger }) => {
     },
   };
 };
+*/
