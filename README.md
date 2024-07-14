@@ -51,3 +51,10 @@ This assignment should take about 2 to 4 hours of your time depending on your le
 
 ## Need Help
 Create a github issue. We'll get back to you.
+
+
+npx prisma migrate dev --name init
+npx prisma studio
+
+Health Endpoint: http://localhost:3000/health
+for easier demo purposes, using auto increment int as id, should use uuid for uniqueness
