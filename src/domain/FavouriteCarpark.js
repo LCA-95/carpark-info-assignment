@@ -1,12 +1,12 @@
-class FavoriteCarpark {
-  constructor({ id, userId, carparkId, deletedAt, createdAt, updatedAt }) {
+class FavouriteCarpark {
+  constructor({ id, userId, carParkId, deletedAt, createdAt, updatedAt }) {
     this.id = id;
     this.userId = userId;
-    this.carparkId = carparkId;
+    this.carParkId = carParkId;
     this.deletedAt = deletedAt;
     this.updatedAt = updatedAt;
     this.createdAt = createdAt;
   }
 }
 
-module.exports = FavoriteCarpark;
+module.exports = FavouriteCarpark;

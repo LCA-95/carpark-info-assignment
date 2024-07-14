@@ -1,51 +1,74 @@
-const favoriteCarparkRepository = require("./favoriteCarparkRepository");
+const favouriteCarparkRepository = require("../repository/favouriteCarparkRepository");
 
-const addFavouriteCarpark = async (req) => {
-  const { carparkId } = req.params;
-  const userId = req.user.id;
-  const existingFavorite =
-    await favoriteCarparkRepository.findFavoriteByCarParkIdAndUserId(
-        carparkId,
-      userId
-    );
-
-  // Exist and not soft deleted
-  if (existingFavorite) {
-    throw new Error("Car park is already in your favorites!");
-  } else {
-    const favorite = await favoriteCarparkRepository.upsertFavouriteCarpark({
-      where: { carParkId, userId },
-    });
-    res.status(200).json({
-      status: "success",
-      message: "Car park added to favorites successfully",
-      data: favorite,
-    });
-  }
-};
-
-const deleteFavoriteCarpark = async (req) => {
-  const { id } = req.params;
-
+const getFavouriteCarpark = async (req, res) => {
   try {
-    const favorite = await favoriteCarparkRepository.deleteFavoriteCarpark(
-      Number(id)
-    );
-    res.status(200).json({
+    const userId = req.query.userId || req.user.id;
+    const favouriteCarparks =
+      await favouriteCarparkRepository.findFavouriteByUserId(
+        parseInt(userId)
+      ); 
+    res.json({
       status: "success",
-      message: "Car park deleted from favorites successfully",
-      data: favorite,
+      message: "Favourite Carparks retrieved successfully",
+      data: favouriteCarparks,
     });
   } catch (error) {
-    res.status(400).json({
+    console.error("Error: ", error);
+    res.status(500).json({
       status: "error",
-      message: "An error occurred while deleting the car park from favorites",
+      message: "An error occurred while retrieving car park favourite",
       error: error.message,
     });
   }
 };
 
-export default {
+const addFavouriteCarpark = async (req,res) => {
+  const { carparkId } = req.params;
+  const userId = req.user.id;
+  const existingFavourite =
+    await favouriteCarparkRepository.findFavouriteByCarParkIdAndUserId(
+      carparkId,
+      userId
+    );
+  // Exist and not soft deleted
+  if (existingFavourite) {
+    throw new Error("Car park is already in your favourites!");
+  } else {
+    const favourite = await favouriteCarparkRepository.upsertFavouriteCarpark(
+      carparkId,
+      userId,
+    );
+    res.status(200).json({
+      status: "success",
+      message: "Car park added to favourites successfully",
+      data: favourite,
+    });
+  }
+};
+
+const deleteFavouriteCarpark = async (req,res) => { 
+  const { favouriteCarparkId } = req.params;
+
+  try {
+    const favourite = await favouriteCarparkRepository.deleteFavouriteCarpark(
+      parseInt(favouriteCarparkId)
+    );
+    res.status(200).json({
+      status: "success",
+      message: "Car park deleted from favourites successfully",
+      data: favourite,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "error",
+      message: "An error occurred while deleting the car park from favourites",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = {
   addFavouriteCarpark,
-  deleteFavoriteCarpark,
+  deleteFavouriteCarpark,
+  getFavouriteCarpark,
 };

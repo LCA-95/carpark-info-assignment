@@ -1,0 +1,111 @@
+{
+  "info": {
+    "name": "Car Park Service API",
+    "_postman_id": "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
+    "description": "API for managing car parks and favorite car parks",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Car Parks",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/v1/carparks?freeParking={{freeParking}}&nightParking={{nightParking}}&gantryHeight={{gantryHeight}}&address={{address}}&page={{page}}&limit={{limit}}",
+          "host": ["http://localhost:3000"],
+          "path": ["api", "v1", "carparks"],
+          "query": [
+            { "key": "freeParking", "value": "{{freeParking}}" },
+            { "key": "nightParking", "value": "{{nightParking}}" },
+            { "key": "gantryHeight", "value": "{{gantryHeight}}" },
+            { "key": "address", "value": "{{address}}" },
+            { "key": "page", "value": "{{page}}", "description": "Page number", "default": "1" },
+            { "key": "limit", "value": "{{limit}}", "description": "Number of items per page", "default": "10" }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Car Park",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"carParkNo\": \"CP001\",\n  \"address\": \"123 Main St\",\n  \"xCoordinate\": 1.234,\n  \"yCoordinate\": 2.345,\n  \"carParkType\": \"multi-storey\",\n  \"parkingSystemType\": \"automated\",\n  \"shortTermParking\": \"yes\",\n  \"freeParking\": \"no\",\n  \"isNightParkingAllowed\": true,\n  \"carParkDeckQuantity\": 3,\n  \"gantryHeight\": 2.1,\n  \"isBasementCarpark\": false\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/v1/carparks",
+          "host": ["http://localhost:3000"],
+          "path": ["api", "v1", "carparks"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Favorite Car Park",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/v1/carparks/:id/favorite",
+          "host": ["http://localhost:3000"],
+          "path": ["api", "v1", "carparks", ":id", "favorite"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Remove Favorite Car Park",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/v1/favorites/:id",
+          "host": ["http://localhost:3000"],
+          "path": ["api", "v1", "favorites", ":id"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Favorites",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/v1/favorites",
+          "host": ["http://localhost:3000"],
+          "path": ["api", "v1", "favorites"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

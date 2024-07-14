@@ -21,7 +21,7 @@ model carPark {
   carParkDeckQuantity   Int
   gantryHeight          Float
   isBasementCarpark     Boolean
-  favoriteCarParks      favoriteCarPark[]  // Added relation field
+  favouriteCarParks      favouriteCarPark[]  // Added relation field
 }
 
 model user {
@@ -29,10 +29,10 @@ model user {
   name            String
   email           String            @unique
   password        String
-  favoriteCarParks favoriteCarPark[]  // Added relation field
+  favouriteCarParks favouriteCarPark[]  // Added relation field
 }
 
-model favoriteCarPark {
+model favouriteCarPark {
   id        Int       @id @default(autoincrement())
   carParkId Int
   userId    Int

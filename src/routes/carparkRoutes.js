@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const CarParkController = require('../controllers/carparkController');
-const carParkController = new CarParkController();
-const authMiddleware = require('../../../middlewares/authMiddleware');
+const carParkController = require('../controllers/carparkController');
+const authMiddleware = require('../infrastructure/middleware/authentication');
 
 router.get('/carparks', authMiddleware, carParkController.getCarParks); 
 

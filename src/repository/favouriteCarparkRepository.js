@@ -1,37 +1,59 @@
 const container = require("../container")();
-const FavoriteCarpark = require("../domain/FavouriteCarpark");
+const FavouriteCarpark = require("../domain/FavouriteCarpark");
 
 const upsertFavouriteCarpark = async (carParkId, userId) => {
-  const favorite = await container.services.prismaClient.favorite.upsert({
-    where: {
-      userId,
-      carParkId,
-    },
-    update: {
-      deletedAt: null,
-      updatedAt: new Date(),
-    },
-  });
-  return new FavoriteCarpark(favorite);
+  const favourite =
+    await container.services.prismaClient.favouriteCarPark.upsert({
+      where: {
+        carParkId_userId: {
+          userId: parseInt(userId),
+          carParkId: parseInt(carParkId),
+        },
+      },
+      // Update Flow
+      update: {
+        deletedAt: null,
+        updatedAt: new Date(),
+      },
+      // Creation Flow
+      create: {
+        carParkId: parseInt(carParkId),
+        userId: parseInt(userId),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    });
+  return new FavouriteCarpark(favourite);
 };
 
-const deleteFavoriteCarpark = async (favoriteCarparkId) => {
-  const favorite = await container.services.prismaClient.favorite.update({
-    where: { id: favoriteCarparkId },
-    data: { deletedAt: new Date() },
-  });
-  return new FavoriteCarpark(favorite);
+const deleteFavouriteCarpark = async (favouriteCarparkId) => {
+  const favourite =
+    await container.services.prismaClient.favouriteCarPark.update({
+      where: { id: parseInt(favouriteCarparkId) },
+      data: { deletedAt: new Date() },
+    });
+  return new FavouriteCarpark(favourite);
 };
 
-const findFavoriteByCarParkIdAndUserId = async (carParkId, userId) => {
-  const favorite = await container.services.prismaClient.favorite.findFirst({
-    where: { carParkId, userId },
-  });
-  return favorite ? new Favorite(favorite) : null;
+const findFavouriteByCarParkIdAndUserId = async (carParkId, userId) => {
+  const favourite =
+    await container.services.prismaClient.favouriteCarPark.findFirst({
+      where: { carParkId: parseInt(carParkId), userId: parseInt(userId), deletedAt: null },
+    });
+  return favourite ? new FavouriteCarpark(favourite) : null;
 };
 
-export default {
+const findFavouriteByUserId = async (userId) => {
+  const favourites =
+    await container.services.prismaClient.favouriteCarPark.findMany({
+      where: { userId: parseInt(userId), deletedAt: null },
+    });
+  return favourites.map((favourite) => new FavouriteCarpark(favourite));
+};
+
+module.exports = {
   upsertFavouriteCarpark,
-  deleteFavoriteCarpark,
-  findFavoriteByCarParkIdAndUserId,
+  deleteFavouriteCarpark,
+  findFavouriteByCarParkIdAndUserId,
+  findFavouriteByUserId,
 };

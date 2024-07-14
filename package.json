@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "prisma": "^3.0.0",
     "sqlite3": "^5.1.7",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
   }
 }

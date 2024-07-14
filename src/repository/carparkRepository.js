@@ -1,5 +1,5 @@
 const container = require("../container")();
-const CarPark = require("./CarPark");
+const CarPark = require("../domain/Carpark");
 
 const getCarparks = async (
   criteria,
@@ -27,6 +27,6 @@ const getCarparks = async (
   };
 };
 
-export default {
+module.exports = {
   getCarparks,
 };
