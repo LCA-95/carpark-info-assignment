@@ -28,6 +28,13 @@ class Carpark {
     this.gantryHeight = gantryHeight;
     this.isBasementCarpark = isBasementCarpark;
   }
+
+  // Sample Domain Function
+  getFormattedFreeParkingDescription() {
+    if (!this.freeParking) {
+      return "-";
+    }
+  }
 }
 
 module.exports = Carpark;

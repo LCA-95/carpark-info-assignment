@@ -42,5 +42,5 @@ model favouriteCarPark {
   user      user      @relation(fields: [userId], references: [id])
   carPark   carPark   @relation(fields: [carParkId], references: [id])
 
-  @@unique([carParkId, userId])
+  @@unique([carParkId, userId]) // Composite Unique Key 
 }

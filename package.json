@@ -6,7 +6,8 @@
     "start": "node index.js",
     "prisma-generate": "prisma generate",
     "prisma-migrate": "prisma migrate dev --name init",
-    "ingest:carparks": "node src/scripts/carParkIngestionScript.js"
+    "ingest:carparks": "node src/scripts/carParkIngestionScript.js",
+    "test": "jest"
   },
   "dependencies": {
     "@prisma/client": "^3.0.0",
@@ -17,6 +18,7 @@
     "eslint": "^9.6.0",
     "express": "^4.19.2",
     "express-validator": "^7.1.0",
+    "jest": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^3.0.0",
     "sqlite3": "^5.1.7",
